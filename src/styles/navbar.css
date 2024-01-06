@@ -1,0 +1,85 @@
+.navbar {
+    width: 100%;
+    height: 70px;
+    background:black;
+    box-shadow:0px 0px 10px rgba(0,0,0,.10);
+    font-family:Poppins;
+  }
+  
+  .expanded {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    transition: 0.5s;
+  }
+  
+  .expanded .links{
+      flex-direction:column;
+      display:flex;
+      flex-direction:column;
+  }
+  
+  .links {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: space-between;
+    font-family:'Courier New', Courier, monospace;
+  }
+
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin:20px;
+    font-size: 22px;
+  }
+  
+  .toggleButton {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .toggleButton svg {
+    font-size: 60px;
+  }
+  
+  .toggleButton button {
+    margin-right: 10px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .toggleButton {
+      display: flex;
+    }
+  
+    .links{
+      display:none;
+    }
+  
+  
+  }
+  
+  @media only screen and (min-width: 600px) {
+    .toggleButton {
+      display: none;
+    }
+  
+    .hiddenLinks {
+      display: none;
+    }
+  
+  
+  }

@@ -1,17 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import NavBar from './components/navbar';
+import React from 'react';
+import { Home } from './pages/home';
+import { About } from './pages/about';
+import { Miscellaneous } from './pages/miscellaneous';
+
 
 function App() {
   return (
     <div className="App">
         <Router>
-            <Navbar/>
+            <NavBar/>
                 <Routes>
-                    <Route path= '/' element={<Home/>}/>
+                    <Route path = '/' element={<Home/>}/>
+                    <Route path = '#about' element={<About/>}/>
+                    <Route path = '#miscellaneous' element={<Miscellaneous/>}/>
                 </Routes>
-            <Footer/>
         </Router>
     </div>
   );
