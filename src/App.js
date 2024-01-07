@@ -5,6 +5,8 @@ import React from 'react';
 import { Home } from './pages/home';
 import { About } from './pages/about';
 import { Miscellaneous } from './pages/miscellaneous';
+import Footer from './components/footer';
+
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
                     <Route path = '#about' element={<About/>}/>
                     <Route path = '#miscellaneous' element={<Miscellaneous/>}/>
                 </Routes>
+            <Footer/>
         </Router>
     </div>
   );
