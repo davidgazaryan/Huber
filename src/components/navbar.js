@@ -6,6 +6,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 
 
 
+
 function NavBar(){
     const [isExpanded, setIsExpanded] = useState(false);
     const [activeNavbar, setActiveNavbar] = useState(false);
@@ -29,12 +30,13 @@ function NavBar(){
             </div>
             <div className='links'>
                 <h3>
-                    <Link>Home</Link>
+                    <Link to="/">Home</Link>
                 </h3>
                 <ul>
-                    <Link>About</Link>
-                    <Link>Reviews</Link>
-                    <Link>Services</Link>
+                    <Link to='/about'>About</Link>
+                    <Link to='/reviews'>Reviews</Link>
+                    <Link to='/services'>Services</Link>
+                    <Link to='/miscellaneous'>Miscellaneous</Link>
                 </ul>
             </div>
         </div>

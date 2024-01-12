@@ -5,6 +5,8 @@ import React from 'react';
 import { Home } from './pages/home';
 import { About } from './pages/about';
 import { Miscellaneous } from './pages/miscellaneous';
+import { Reviews } from './pages/reviews';
+import { Services } from './pages/services';
 import Footer from './components/footer';
 
 
@@ -16,8 +18,10 @@ function App() {
             <NavBar/>
                 <Routes>
                     <Route path = '/' element={<Home/>}/>
-                    <Route path = '#about' element={<About/>}/>
-                    <Route path = '#miscellaneous' element={<Miscellaneous/>}/>
+                    <Route path = '/about' element={<About/>}/>
+                    <Route path = '/miscellaneous' element={<Miscellaneous/>}/>
+                    <Route path = '/reviews' element={<Reviews/>}/>
+                    <Route path = '/services' element={<Services/>}/>
                 </Routes>
             <Footer/>
         </Router>
