@@ -15,7 +15,7 @@ export const Home = () => {
                     We offer a unique ride-hailing experience designed for those who seek a reliable and exclusive journey. 
                     Enjoy the luxury of having your dedicated driver at your service, ensuring you arrive at your destination in comfort and style. 
                     Your safety and satisfaction are our top priorities as we redefine the way you travel. Elevate your commute with a touch of personalized service — 
-                    because every journey deserves a dedicated chauffeur..
+                    because every journey deserves a dedicated chauffeur.
                     </p>
                     <button>
                         <Link to='/services'>Get Started</Link>

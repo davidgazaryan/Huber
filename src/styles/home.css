@@ -1,6 +1,7 @@
 .home {
     display: flex;
     align-items: center; /* Align items vertically in the center */
+    height:100vh;
   }
 
 .homecontainer{
@@ -23,7 +24,7 @@
 
 .containerright{
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
 }
   
