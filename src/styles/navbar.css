@@ -5,6 +5,16 @@
     box-shadow:0px 0px 10px rgba(0,0,0,.40);
     font-family:Poppins;
   }
+
+  .links {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: space-between;
+    font-family:'Courier New', Courier, monospace;
+  }
   
   .expanded {
     background-color: black;
@@ -20,29 +30,20 @@
   .expanded .links{
     display: flex;
     flex-direction: column;
-  }
-
-  .expanded .links h3{
-    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    justify-content:flex-start;
   }
 
   .expanded .links ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
   }
-  
-
-  .links {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction:row;
-    align-items: center;
-    justify-content: space-between;
-    font-family:'Courier New', Courier, monospace;
-  }
-
-  
+    
   .navbar a {
     color: white;
     text-decoration: none;

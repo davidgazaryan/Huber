@@ -1,3 +1,26 @@
 .main{
     height:100vh;
 }
+
+
+.contactcontainer {
+    margin-top:1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:3rem;
+    color: black;
+}
+
+.contactcontainer a{
+    display: block;
+    text-decoration: none;
+    color: gray;
+}
+
+.contactcontainer a:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color:orange;
+}
