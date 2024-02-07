@@ -2,32 +2,25 @@
     display: flex;
     align-items: center; /* Align items vertically in the center */
     height:100vh;
+    justify-content: center;
   }
 
 .homecontainer{
-    display: flex;
-    flex-direction: row;
-    max-width:107rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width:100rem;
     align-items: center;
     justify-content: center;
-    gap:10rem;
+    
 }
 
-.containerleft{
-    width:50%;
-}
 
 .containerleft a{
     text-decoration: none;
     color:white;
 }
 
-.containerright{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-  
+
 .home button {
     position: relative;
     background-color: black;
@@ -37,7 +30,8 @@
   }
   
 .home img {
-    height:50vh;
+    height:35rem;
+    width: 31rem;
     border-radius:15px;
     
   }

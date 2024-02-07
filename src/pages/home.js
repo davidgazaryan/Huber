@@ -1,6 +1,5 @@
 import React from "react";
 import photo1 from '../photos/photo1.jpg';
-import photo2 from '../photos/photo2.jpg';
 import '../styles/home.css'
 import { Link } from "react-router-dom";
 
@@ -23,7 +22,6 @@ export const Home = () => {
                 </div>
                 <div className="containerright">
                     <img src={photo1} alt=""></img>
-                    <img src={photo2} alt=""></img>
                 </div>
             </div>
         </div>

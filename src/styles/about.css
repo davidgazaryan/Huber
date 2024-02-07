@@ -1,0 +1,19 @@
+.about {
+    display: flex;
+    align-items: center;
+    height:100vh;
+    justify-content: center;
+}
+
+.aboutcontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 100rem;
+    justify-content: center;
+}
+
+.about img {
+    height: 35rem;
+    width: 31rem;
+    border-radius: 15px;
+}
