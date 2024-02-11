@@ -6,7 +6,7 @@ from .serializers import UserSerlializer
 from rest_framework import status 
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework.permissions import IsAuthenticated
 
 @api_view(['POST'])
@@ -34,3 +34,8 @@ def signup(request):
 @permission_classes([IsAuthenticated])
 def test_token(request):
     return Response({})
+
+def leave_review(request):
+    if not request.User.is_authenticated: # maybe search for better way 
+        redirect('login')
+        
