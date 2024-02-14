@@ -8,6 +8,8 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.decorators import login_required
+
 
 @api_view(['POST'])
 def login(request):
@@ -35,6 +37,7 @@ def signup(request):
 def test_token(request):
     return Response({})
 
+@login_required
 def leave_review(request):
     if not request.User.is_authenticated: # maybe search for better way 
         redirect('login')
