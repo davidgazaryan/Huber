@@ -7,6 +7,8 @@ import { About } from './pages/about';
 import { Miscellaneous } from './pages/miscellaneous';
 import { Reviews } from './pages/reviews';
 import { Services } from './pages/services';
+import { Login } from './pages/login';
+import { SignUp } from './pages/signup';
 import Footer from './components/footer';
 
 
@@ -22,6 +24,8 @@ function App() {
                     <Route path = '/miscellaneous' element={<Miscellaneous/>}/>
                     <Route path = '/reviews' element={<Reviews/>}/>
                     <Route path = '/services' element={<Services/>}/>
+                    <Route path='/login' element={<Login/>}/>
+                    <Route path='/signup' element={<SignUp/>}/>
                 </Routes>
             <Footer/>
         </Router>

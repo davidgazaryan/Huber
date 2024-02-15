@@ -37,6 +37,8 @@ function NavBar(){
                     <Link to='/reviews'>Reviews</Link>
                     <Link to='/services'>Services</Link>
                     <Link to='/miscellaneous'>Miscellaneous</Link>
+                    <Link to='/login'>Login</Link>
+                    <Link to='/signup'>Sign Up</Link>
                 </ul>
             </div>
         </div>
