@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 
 @api_view(['POST'])
 def login(request):
-    user = get_object_or_404(User, Username=request.data['username'])
+    user = get_object_or_404(User, Email=request.data['email'])
     if not user.check_password(): return Response({'detail': 'Not Found'}, status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerlializer(instance=user)
@@ -24,7 +24,7 @@ def signup(request):
     serializer = UserSerlializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        user = User.objects.get(username=request.data['username'])
+        user = User.objects.get(email=request.data['email'])
         user.set_password(request.data['password'])
         user.save()
         token = Token.objects.create(user=user)

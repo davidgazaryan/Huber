@@ -6,7 +6,7 @@ from .models import Review
 class UserSerlializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id','username','password','email']
+        fields = ['id','password','email']
 
 class ReviewSerlializer(serializers.ModelSerializer):
     class Meta:
