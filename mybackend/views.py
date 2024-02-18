@@ -42,3 +42,7 @@ def leave_review(request):
     if not request.User.is_authenticated: # maybe search for better way 
         redirect('login')
         
+@login_required
+def order_ride(request):
+    if not request.User.is_authenticated:
+        redirect('login')
