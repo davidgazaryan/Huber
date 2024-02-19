@@ -13,6 +13,7 @@ class Review(models.Model):
     
 
 class Order(models.Model):
+    user = models.ForeignKey(User,on_delete = models.CASCADE)
     services = [('airport_pickup','Airport Pickup'),
                 ('hourly_ride', 'Hourly Booking'),
                 ('long_distance_trip','Long Distance Trip')]
