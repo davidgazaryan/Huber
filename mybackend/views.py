@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.response import Response
-from .serializers import UserSerlializer
+from .serializers import UserSerlializer, OrderSerializer, ReviewSerlializer
 from rest_framework import status 
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
@@ -41,8 +41,14 @@ def test_token(request):
 def leave_review(request):
     if not request.User.is_authenticated: # maybe search for better way 
         redirect('login')
+    serializer = ReviewSerlializer(data=request.data)
+    if serializer.is_valid:
+        serializer.save()
         
 @login_required
 def order_ride(request):
     if not request.User.is_authenticated:
         redirect('login')
+    serlializer = OrderSerializer(data=request.data)
+    if serlializer.is_valid:
+        serlializer.save()
