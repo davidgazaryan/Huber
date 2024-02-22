@@ -23,3 +23,7 @@ class Order(models.Model):
     service_type = models.CharField(max_length=20,choices=services)
     order_description = models.TextField(blank=True,null=True)
     order_date = models.DateTimeField(choices=)
+
+
+    def __str__(self) -> str:
+        return f"{self.service_type} - {self.order_date}"
