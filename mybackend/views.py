@@ -37,6 +37,7 @@ def signup(request):
 def test_token(request):
     return Response({})
 
+@api_view(['POST'])
 @login_required
 def leave_review(request):
     if not request.User.is_authenticated: # maybe search for better way 
@@ -44,7 +45,8 @@ def leave_review(request):
     serializer = ReviewSerlializer(data=request.data)
     if serializer.is_valid:
         serializer.save()
-        
+
+@api_view(['POST'])
 @login_required
 def order_ride(request):
     if not request.User.is_authenticated:
