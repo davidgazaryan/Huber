@@ -10,7 +10,7 @@ class Review(models.Model):
     title = models.CharField(max_length = 100)
     body = models.TextField()
     rating = models.IntegerField(validators=[MaxValueValidator(5,message="Choose a number from 1-5"),MinValueValidator(1,message='Choose a number from 1-5')])
-    date_created = models.DateTimeField(auto_now_add = True)
+    created_at = models.DateTimeField(auto_now_add = True)
     
 
 class Order(models.Model):
@@ -18,11 +18,11 @@ class Order(models.Model):
     services = [('airport_pickup','Airport Pickup'),
                 ('hourly_ride', 'Hourly Booking'),
                 ('long_distance_trip','Long Distance Trip')]
-    dates = []
     
     service_type = models.CharField(max_length=20,choices=services)
     order_description = models.TextField(blank=True,null=True)
-    order_date = models.DateTimeField(choices=)
+    order_date = models.DateTimeField()
+    created_at = models.DateTimeField(editable=False,auto_now_add=True)
 
 
     def __str__(self) -> str:
