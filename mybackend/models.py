@@ -9,7 +9,7 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     title = models.CharField(max_length = 100)
     body = models.TextField()
-    rating = models.IntegerField(validators=[MaxValueValidator(5,message="Choose a number from 1-5"),MinValueValidator(1,message='Choose a number from 1-5')])
+    rating = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5,message="Choose a number from 1-5"),MinValueValidator(1,message='Choose a number from 1-5')])
     created_at = models.DateTimeField(auto_now_add = True)
     
 
