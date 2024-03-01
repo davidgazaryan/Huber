@@ -11,4 +11,4 @@ class OrderForm(ModelForm):
 class ReviewForm(ModelForm):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = ['body','title','rating']

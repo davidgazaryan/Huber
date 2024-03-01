@@ -9,8 +9,10 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 
+@ensure_csrf_cookie
 @api_view(['POST'])
 def login(request):
     user = get_object_or_404(User, Email=request.data['email'])
@@ -19,6 +21,7 @@ def login(request):
     serializer = UserSerlializer(instance=user)
     return Response({"token":token.key, "user":serializer.data})
     
+@ensure_csrf_cookie
 @api_view(['POST'])
 def signup(request):
     serializer = UserSerlializer(data=request.data)
@@ -31,6 +34,7 @@ def signup(request):
         return Response({"token":token.key, "user":serializer.data})
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+@ensure_csrf_cookie
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication,TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -39,6 +43,7 @@ def test_token(request):
 
 @api_view(['POST'])
 @login_required
+@ensure_csrf_cookie
 def leave_review(request):
     if not request.User.is_authenticated: # maybe search for better way 
         redirect('login')
@@ -48,6 +53,7 @@ def leave_review(request):
 
 @api_view(['POST'])
 @login_required
+@ensure_csrf_cookie
 def order_ride(request):
     if not request.User.is_authenticated:
         redirect('login')

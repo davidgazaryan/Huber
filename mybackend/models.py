@@ -8,9 +8,12 @@ from django.core.validators import MaxValueValidator,MinValueValidator
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     title = models.CharField(max_length = 100)
-    body = models.TextField()
+    body = models.TextField(max_length = 500)
     rating = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5,message="Choose a number from 1-5"),MinValueValidator(1,message='Choose a number from 1-5')])
     created_at = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self) -> str:
+        return self.body
     
 
 class Order(models.Model):
