@@ -10,6 +10,8 @@ from django.shortcuts import get_object_or_404, redirect
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 @ensure_csrf_cookie
@@ -42,21 +44,27 @@ def test_token(request):
     return Response({})
 
 @api_view(['POST'])
-@login_required
+@permission_classes([IsAuthenticated])
 @ensure_csrf_cookie
 def leave_review(request):
-    if not request.User.is_authenticated: # maybe search for better way 
-        redirect('login')
-    serializer = ReviewSerlializer(data=request.data)
-    if serializer.is_valid:
-        serializer.save()
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    if request.method == 'POST':
+        serializer = ReviewSerlializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-@login_required
+@permission_classes([IsAuthenticated])
 @ensure_csrf_cookie
 def order_ride(request):
-    if not request.User.is_authenticated:
-        redirect('login')
-    serlializer = OrderSerializer(data=request.data)
-    if serlializer.is_valid:
-        serlializer.save()
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    if request.method == 'POST':
+        serlializer = OrderSerializer(data=request.data)
+        if serlializer.is_valid:
+            serlializer.save()
+            return Response(serlializer.data,status=status.HTTP_201_CREATED)
+        return Response(serlializer.errors,status=status.HTTP_400_BAD_REQUEST)

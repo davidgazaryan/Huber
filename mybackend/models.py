@@ -27,6 +27,7 @@ class Order(models.Model):
     order_date = models.DateTimeField()
     created_at = models.DateTimeField(editable=False,auto_now_add=True)
     approximate_distance = models.PositiveSmallIntegerField(validators=[MinValueValidator(1,message="Distance must be greater than 0")])
+    order_destination = models.CharField(max_length=50)
 
 
     def __str__(self) -> str:
