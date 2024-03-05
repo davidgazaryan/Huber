@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.core.mail import send_mail
 
 
 @ensure_csrf_cookie
@@ -66,5 +67,11 @@ def order_ride(request):
         serlializer = OrderSerializer(data=request.data)
         if serlializer.is_valid:
             serlializer.save()
+            subject = 'Order Confirmation'
+            message = 'Your ride order has been successfully placed.'
+            from_email = 'admin@example.com'  # Replace with your email address or set it to None for default
+            to_email = request.user.email  # Assuming user email is stored in User model
+            
+            send_mail(subject, message, from_email, [to_email])
             return Response(serlializer.data,status=status.HTTP_201_CREATED)
         return Response(serlializer.errors,status=status.HTTP_400_BAD_REQUEST)

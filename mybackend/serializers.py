@@ -8,12 +8,21 @@ class UserSerlializer(serializers.ModelSerializer):
         model = User
         fields = ['id','password','email']
 
+        def validate_email(self,value):
+            if not value.endswith('@example.com') or not value.endswith('@example.edu'):
+                raise serializers.ValidationError('invalid email')
+            return value
+
 class ReviewSerlializer(serializers.ModelSerializer):
     class Meta:
         model = Review 
         fields = ['user', 'title', 'body', 'rating', 'created_at']
 
         def validate_rating(self,value):
+            try:
+                rating = int(value)
+            except (TypeError, ValueError):
+               raise serializers.ValidationError("Rating must be an integer.")
             if value  < 1 or value > 5:
                 raise serializers.ValidationError('rating must be between 1 and 5')
             return value
