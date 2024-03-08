@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from mybackend import views
-from django.urls import re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path('login', views.login),
-    re_path('signup', views.signup),
-    re_path('test_token', views.test_token)
+    path('login', views.login, name='login'),
+    path('signup', views.signup, name='signup'),
+    path('test_token', views.test_token, name='test_token'),
+    path()
 ]

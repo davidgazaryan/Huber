@@ -26,9 +26,9 @@ class Order(models.Model):
     order_description = models.TextField(blank=True,null=True)
     order_date = models.DateTimeField()
     created_at = models.DateTimeField(editable=False,auto_now_add=True)
-    approximate_distance = models.PositiveSmallIntegerField(validators=[MinValueValidator(1,message="Distance must be greater than 0")])
+    # approximate_distance = models.PositiveSmallIntegerField(validators=[MinValueValidator(1,message="Distance must be greater than 0")])
+    pickup_location = models.CharField(max_length=50)
     order_destination = models.CharField(max_length=50)
-
 
     def __str__(self) -> str:
         return f"{self.service_type} - {self.order_date}"
