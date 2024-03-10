@@ -15,6 +15,7 @@ class Review(models.Model):
     def __str__(self) -> str:
         return self.body
     
+    #MAKE A CHECKOUT AS GUEST OPTION FOR ORDERING 
 
 class Order(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE)

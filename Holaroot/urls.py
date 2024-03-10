@@ -24,4 +24,7 @@ urlpatterns = [
     path('api/test_token', views.test_token, name='test_token'),
     path('api/leave_review',views.leave_review,name='leave_review'),
     path('api/order_ride',views.order_ride, name='order_ride'),
+    path('api/update_order/<int:id>/', views.update_order, name='update_order'),
+    path('api/orders', views.user_orders, name='user_orders'),
+
 ]
