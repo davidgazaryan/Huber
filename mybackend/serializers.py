@@ -6,10 +6,10 @@ from .models import Review, Order
 class UserSerlializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id','password','email']
+        fields = ['id','username','password','email']
 
         def validate_email(self,value):
-            if not value.endswith('@example.com') or not value.endswith('@example.edu'):
+            if not (value.endswith('@example.com') or value.endswith('@example.edu')):
                 raise serializers.ValidationError('invalid email')
             return value
 

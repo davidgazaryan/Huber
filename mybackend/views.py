@@ -13,6 +13,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.core.mail import send_mail
+from .models import Review,Order
 
 
 @ensure_csrf_cookie
@@ -48,8 +49,10 @@ def test_token(request):
 @permission_classes([IsAuthenticated])
 @ensure_csrf_cookie
 def leave_review(request):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerlializer
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('login'))
+        return HttpResponseRedirect(reverse('api/login'))
     if request.method == 'POST':
         serializer = ReviewSerlializer(data=request.data)
         if serializer.is_valid():
@@ -62,16 +65,44 @@ def leave_review(request):
 @ensure_csrf_cookie
 def order_ride(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('login'))
+        return HttpResponseRedirect(reverse('api/login'))
     if request.method == 'POST':
         serlializer = OrderSerializer(data=request.data)
-        if serlializer.is_valid:
+        if serlializer.is_valid():
             serlializer.save()
-            subject = 'Order Confirmation'
-            message = 'Your ride order has been successfully placed.'
+            service_type = request.data.get('service_type')
+            order_description = request.data.get('order_description')
+            order_date = request.data.get('order_date')
+            pickup_location = request.data.get('pickup_location')
+            order_destination = request.data.get('order_destination')
+        
+            subject = f'Order Confirmation for {service_type}'
+            message = f'Your ride order has been successfully placed.\nDescription : {order_description}\nOrder Date: {order_date}\nPickup Location: {pickup_location}\nDropOff Location: {order_destination}'
             from_email = 'admin@example.com'  # Replace with your email address or set it to None for default
             to_email = request.user.email  # Assuming user email is stored in User model
             
             send_mail(subject, message, from_email, [to_email])
             return Response(serlializer.data,status=status.HTTP_201_CREATED)
         return Response(serlializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def update_order(request,pk):
+    order = Order.objects.get(id=pk)
+    serializer = OrderSerializer(instance=order,data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        service_type = request.data.get('service_type')
+        order_description = request.data.get('order_description')
+        order_date = request.data.get('order_date')
+        pickup_location = request.data.get('pickup_location')
+        order_destination = request.data.get('order_destination')
+
+        subject = f'Updated Order Confirmation for {service_type}'
+        message = f'Your ride order has been successfully updated.\nDescription : {order_description}\nOrder Date: {order_date}\nPickup Location: {pickup_location}\nDropOff Location: {order_destination}'
+        from_email = 'admin@example.com'  # Replace with your email address or set it to None for default
+        to_email = request.user.email  # Assuming user email is stored in User model
+            
+        send_mail(subject, message, from_email, [to_email])
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
