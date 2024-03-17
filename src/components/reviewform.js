@@ -5,7 +5,7 @@ const ReviewForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     title: '',
     body: '',
-    rating: 1, // Default rating value
+    rating: 5, // Default rating value
   });
 
   const handleChange = (e) => {
@@ -15,7 +15,7 @@ const ReviewForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit(formData); // function that we pass our formdata as arguments to
     // Optionally, you can clear the form fields after submission
     setFormData({ title: '', body: '', rating: 1 });
   };

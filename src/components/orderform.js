@@ -18,7 +18,7 @@ const OrderForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/orders/', formData);
+      await axios.post('http://127.0.0.1:8000/api/orders/', formData);
       alert('Order placed successfully!');
       // Reset the form after successful submission
       setFormData({

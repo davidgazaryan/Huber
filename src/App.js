@@ -5,12 +5,11 @@ import React from 'react';
 import { Home } from './pages/home';
 import { About } from './pages/about';
 import { Miscellaneous } from './pages/miscellaneous';
-import { Reviews } from './pages/reviews';
+import { Review } from './pages/reviews';
 import { Services } from './pages/services';
 import { Login } from './pages/login';
 import { SignUp } from './pages/signup';
 import Footer from './components/footer';
-
 
 
 function App() {
@@ -22,7 +21,7 @@ function App() {
                     <Route path = '/' element={<Home/>}/>
                     <Route path = '/about' element={<About/>}/>
                     <Route path = '/miscellaneous' element={<Miscellaneous/>}/>
-                    <Route path = '/reviews' element={<Reviews/>}/>
+                    <Route path = '/reviews' element={<Review/>}/>
                     <Route path = '/services' element={<Services/>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/signup' element={<SignUp/>}/>

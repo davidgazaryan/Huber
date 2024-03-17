@@ -2,14 +2,15 @@ import React from 'react';
 import ReviewForm from '../components/reviewform';
 
 
-const Review = () => {
+export const Review = () => {
   const handleSubmit = (formData) => {
     // Send formData to your backend API
-    fetch('/api/reviews/', {
+    fetch('http://127.0.0.1:8000/api/review/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials:'include',
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
