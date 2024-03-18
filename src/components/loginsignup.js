@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 export const LoginSignUp = ({onSubmit, isLogin}) => {
 
-    const [username,setUsername] = useState('')
     const [form,setForm] = useState({
         username:'',
         email:'',
@@ -40,14 +39,14 @@ export const LoginSignUp = ({onSubmit, isLogin}) => {
             <form action="">
                 {isLogin ? <h1> Login </h1> : <h1>SignUp</h1>}
                 <div className="input-box">
-                    <input type="email" id="email" name="email" placeholder="Email.." required/>
+                    <input onChange={handleChange} type="email" id="email" name="email" placeholder="Email.." required/>
                     <FaUser className="icon"/>
                 </div>
                 <div className="input-box">
-                    <input type="password" id="password" name='password' placeholder="Password.." required/>
+                    <input onChange={handleChange} type="password" id="password" name='password' placeholder="Password.." required/>
                     <FaLock className="icon"/>
                 </div>
-                <button type="submit">Login</button>
+                <button onClick={handleSubmit} type="submit">Login</button>
                 <div className="register-link">
                     {isLogin? <p>Don't have an account? <Link to='/signup'>Register</Link></p> : <p>Already have an account? <Link to='/login'>Login</Link></p>}
                 </div>

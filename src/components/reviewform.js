@@ -17,14 +17,14 @@ const ReviewForm = ({ onSubmit }) => {
     e.preventDefault();
     onSubmit(formData); // function that we pass our formdata as arguments to
     // Optionally, you can clear the form fields after submission
-    setFormData({ title: '', body: '', rating: 1 });
+    setFormData({ title: '', body: '', rating: 5 });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='review-form'>
         <DjangoCSRFToken/>
-      <div>
-        <label htmlFor="title">Title:</label>
+      <div className='form-group'>
+        <label className='form-label' htmlFor="title">Title:</label>
         <input
           type="text"
           id="title"
@@ -34,8 +34,8 @@ const ReviewForm = ({ onSubmit }) => {
           required
         />
       </div>
-      <div>
-        <label htmlFor="body">Body:</label>
+      <div className='form-group'>
+        <label htmlFor="body" className='form-label'>Body:</label>
         <textarea
           id="body"
           name="body"
@@ -44,8 +44,8 @@ const ReviewForm = ({ onSubmit }) => {
           required
         />
       </div>
-      <div>
-        <label htmlFor="rating">Rating:</label>
+      <div className='form-group'>
+        <label htmlFor="rating" className='form-label'>Rating:</label>
         <select
           id="rating"
           name="rating"
@@ -61,7 +61,7 @@ const ReviewForm = ({ onSubmit }) => {
           ))}
         </select>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit" className='btn-submit'>Submit</button>
     </form>
   );
 };

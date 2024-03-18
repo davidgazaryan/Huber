@@ -1,5 +1,6 @@
 import React from 'react';
 import ReviewForm from '../components/reviewform';
+import '../styles/reviews.css';
 
 
 export const Review = () => {
