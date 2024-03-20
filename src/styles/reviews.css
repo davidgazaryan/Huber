@@ -1,3 +1,9 @@
+.main-review{
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
 .review-form {
     max-width: 500px;
     margin: 0 auto;
@@ -8,7 +14,25 @@
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+}
+
+.form-group input{
+    width: 100%;
+}
+
+.form-group-body{
+    margin-bottom: 4rem;
+}
+
+.form-group-body textarea{
+    height:200px;
+    width: 100%;
+}
+
+.form-group-rating {
+    margin-bottom: 2rem;
 }
 
 .form-label {

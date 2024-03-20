@@ -7,9 +7,10 @@ import axios from "axios";
 
 export const Login = () => {
 
-    const location = useLocation()
-    const isLoginPage = location.pathname === '/login'
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const location = useLocation();
+    const isLoginPage = location.pathname === '/login';
+    
     const handleSubmit = async (formData) => {
         try {
             await axios.post('http://127.0.0.1:8000/api/login/', formData,

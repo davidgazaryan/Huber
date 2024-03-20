@@ -26,8 +26,8 @@ export const Review = () => {
   };
 
   return (
-    <div>
-      <h1>Submit a Review</h1>
+    <div className='main-review'>
+      <h1>Leave A Review</h1>
       <ReviewForm onSubmit={handleSubmit} />
     </div>
   );

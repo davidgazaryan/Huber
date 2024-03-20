@@ -24,7 +24,7 @@ const ReviewForm = ({ onSubmit }) => {
     <form onSubmit={handleSubmit} className='review-form'>
         <DjangoCSRFToken/>
       <div className='form-group'>
-        <label className='form-label' htmlFor="title">Title:</label>
+        <label className='form-label' htmlFor="title">Title</label>
         <input
           type="text"
           id="title"
@@ -34,8 +34,8 @@ const ReviewForm = ({ onSubmit }) => {
           required
         />
       </div>
-      <div className='form-group'>
-        <label htmlFor="body" className='form-label'>Body:</label>
+      <div className='form-group-body'>
+        <label htmlFor="body" className='form-label'>Body</label>
         <textarea
           id="body"
           name="body"
@@ -44,8 +44,8 @@ const ReviewForm = ({ onSubmit }) => {
           required
         />
       </div>
-      <div className='form-group'>
-        <label htmlFor="rating" className='form-label'>Rating:</label>
+      <div className='form-group-rating'>
+        <label htmlFor="rating" className='form-label'>Rating</label>
         <select
           id="rating"
           name="rating"

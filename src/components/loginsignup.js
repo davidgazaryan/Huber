@@ -36,7 +36,7 @@ export const LoginSignUp = ({onSubmit, isLogin}) => {
 
     return(
         <div className="main-login">
-            <form action="">
+            <form className="wrapper" action="">
                 {isLogin ? <h1> Login </h1> : <h1>SignUp</h1>}
                 <div className="input-box">
                     <input onChange={handleChange} type="email" id="email" name="email" placeholder="Email.." required/>

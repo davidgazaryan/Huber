@@ -13,7 +13,7 @@
     flex-direction:row;
     align-items: center;
     justify-content: space-between;
-    font-family:'Courier New', Courier, monospace;
+    font-family:'Nunito Sans', Courier, monospace;
   }
   
   .expanded {
