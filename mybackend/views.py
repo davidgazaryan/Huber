@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponseRedirect
@@ -15,18 +15,24 @@ from django.urls import reverse
 from django.core.mail import send_mail
 from .models import Review,Order
 from django.http import JsonResponse
+from django.contrib.auth import login, authenticate
 
 
 @ensure_csrf_cookie
 @api_view(['POST'])
-def login(request):
-    user = get_object_or_404(User, Email=request.data['email'])
-    if not user.check_password(): return Response({'detail': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-    token, created = Token.objects.get_or_create(user=user)
-    response = JsonResponse({"user": UserSerlializer(instance=user).data})
-    response.set_cookie(key='token', value=token.key, httponly=True)
+def loginview(request):
+    user = get_object_or_404(User, email=request.data['email'])
+    if not user.check_password(request.data['password']): return Response({'detail': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    user = authenticate(username=request.data['email'],email=request.data['email'],password=request.data['password'])
+    if user:
+        login(request, user=user) # MAY NOT NEED THIS SINCE WE ARE JUST USING TOKEN AUTH JUST USE TOKEN TO ACCESS ENDPOINTS 
+        token, created = Token.objects.get_or_create(user=user)
+        response = JsonResponse({"user": UserSerlializer(instance=user).data},status=status.HTTP_200_OK)
+        response.set_cookie(key='token', value=token.key, httponly=True,samesite=None,secure=True)
     
-    return response
+        return response
+    else:
+        return Response({'error':'invalid credentials listed'},status=status.HTTP_401_UNAUTHORIZED)
     
 @ensure_csrf_cookie
 @api_view(['POST'])
@@ -36,12 +42,16 @@ def signup(request):
         serializer.save()
         user = User.objects.get(email=request.data['email'])
         user.set_password(request.data['password'])
+        username = request.data['email']
         user.save()
-        token = Token.objects.create(user=user)
-        response = JsonResponse({"user": serializer.data})
-        response.set_cookie(key='token', value=token.key, httponly=True)
-        return response
-    return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        user = authenticate(request=request,username=username, email=request.data['email'],password=request.data['password'])
+        if user:
+            login(request,user)
+            token = Token.objects.create(user=user)
+            response = JsonResponse({"user": serializer.data})
+            response.set_cookie(key='token', value=token.key, httponly=True,samesite=None,secure=True)
+            return response
+    return Response(serializer.errors, status=status.HTTP_200_OK)
 
 @ensure_csrf_cookie
 @api_view(['GET'])
@@ -50,13 +60,17 @@ def signup(request):
 def test_token(request):
     return Response({})
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
 @ensure_csrf_cookie
 def leave_review(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('/login'))
-    if request.method == 'POST':
+    if request.method == 'GET':
+        reviews = Review.objects.all()
+        serializer = ReviewSerlializer(instance=reviews, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
         serializer = ReviewSerlializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -65,10 +79,9 @@ def leave_review(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication,TokenAuthentication])
 @ensure_csrf_cookie
 def order_ride(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('/login'))
     if request.method == 'POST':
         serlializer = OrderSerializer(data=request.data)
         if serlializer.is_valid(raise_exception=True):###added raise exception
