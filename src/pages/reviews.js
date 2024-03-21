@@ -20,7 +20,7 @@ export const Review = () => {
         // Optionally, handle success or display a message to the user
       })
       .catch((error) => {
-        console.error('Error submitting review:', error);
+        console.error('Error submitting reviews try again:', error);
         // Optionally, handle errors or display an error message to the user
       });
   };

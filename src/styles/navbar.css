@@ -48,7 +48,7 @@
     color: white;
     text-decoration: none;
     margin:20px;
-    font-size: 22px;
+    font-size: 18px;
   }
   
   .toggleButton {
@@ -71,7 +71,7 @@
     cursor: pointer;
   }
   
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 860px) {
     .toggleButton {
       display: flex;
     }
@@ -83,7 +83,7 @@
   
   }
   
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 861px) {
     .toggleButton {
       display: none;
     }

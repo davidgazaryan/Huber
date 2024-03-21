@@ -10,12 +10,14 @@ import { Services } from './pages/services';
 import { Login } from './pages/login';
 import { SignUp } from './pages/signup';
 import Footer from './components/footer';
+import { AuthProvider } from './hooks/Authcontext';
 
 
 function App() {
   return (
     <div className="App">
         <Router>
+          <AuthProvider>
             <NavBar/>
                 <Routes>
                     <Route path = '/' element={<Home/>}/>
@@ -27,6 +29,7 @@ function App() {
                     <Route path='/signup' element={<SignUp/>}/>
                 </Routes>
             <Footer/>
+          </AuthProvider>
         </Router>
     </div>
   );

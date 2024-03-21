@@ -4,19 +4,25 @@ import '../styles/signup.css';
 import { useLocation } from "react-router-dom";
 import { LoginSignUp } from "../components/loginsignup";
 import axios from "axios";
+import useAuthContext from "../hooks/useAuthcontext";
 
 export const SignUp = () => {
     
+    const {user, setUser} = useAuthContext();
+
     const location = useLocation();
     const isLoginPage = location.pathname === '/login';
 
     const handleSubmit = async (formData) => {
         try {
-            await axios.post('http://127.0.0.1:8000/api/signup/', formData,
+            const response = await axios.post('http://127.0.0.1:8000/api/signup/', formData,
             {headers: 
                 {"Content-Type" : "application/json"},
-            withCredentials: true},
-            ).then((response) => console.log(response.data))
+            withCredentials: true})
+
+            if (response.status === 200){
+                setUser(response.data.email);
+            }
             
         } catch (error) {
             console.error(error)

@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import '../styles/navbar.css';
 import { IoReorderTwoOutline } from "react-icons/io5";
 import { IoIosCloseCircle } from "react-icons/io";
-
+import Logout from './logout';
+import useAuthContext from '../hooks/useAuthcontext';
 
 
 
@@ -11,6 +12,7 @@ function NavBar(){
     const [isExpanded, setIsExpanded] = useState(false);
     const [activeNavbar, setActiveNavbar] = useState(false);
     const location = useLocation();
+    const {user} = useAuthContext();
 
     useEffect(() => {
         setActiveNavbar(false);
@@ -37,9 +39,20 @@ function NavBar(){
                     <Link to='/reviews'>Reviews</Link>
                     <Link to='/services'>Services</Link>
                     <Link to='/miscellaneous'>Miscellaneous</Link>
-                    <Link to='/login'>Login</Link>
-                    <Link to='/signup'>Sign Up</Link>
+                    {user != null ? (
+                        <>
+                        <li>{user}</li>
+                        <li><Logout/></li>
+                        </>
+                    ) :
+                    (
+                        <>
+                        <Link to='/login'>Login</Link>
+                        <Link to='/signup'>SignUp</Link>
+                        </>
+                    )}
                 </ul>
+
             </div>
         </div>
     )
