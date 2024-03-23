@@ -77,12 +77,28 @@ def leave_review(request):
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([SessionAuthentication,TokenAuthentication])
 @ensure_csrf_cookie
 def order_ride(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
+        username = request.query_params.get('username')
+        email = request.query_params.get('email')
+
+        # Retrieve the user based on username or email
+        if username:
+            user = get_object_or_404(User, username=username)
+        elif email:
+            user = get_object_or_404(User, email=email)
+        else:
+            return Response({'error': 'Username or email parameter is required'}, status=400)
+
+        # Fetch orders associated with the user
+        orders = Order.objects.filter(user=user)
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
         serlializer = OrderSerializer(data=request.data)
         if serlializer.is_valid(raise_exception=True):###added raise exception
             serlializer.save()
@@ -126,22 +142,3 @@ def update_order(request,pk):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-@ensure_csrf_cookie
-def user_orders(request):
-    username = request.query_params.get('username')
-    email = request.query_params.get('email')
-
-    # Retrieve the user based on username or email
-    if username:
-        user = get_object_or_404(User, username=username)
-    elif email:
-        user = get_object_or_404(User, email=email)
-    else:
-        return Response({'error': 'Username or email parameter is required'}, status=400)
-
-    # Fetch orders associated with the user
-    orders = Order.objects.filter(user=user)
-    serializer = OrderSerializer(orders, many=True)
-    return Response(serializer.data)
