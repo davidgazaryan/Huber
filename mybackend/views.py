@@ -16,8 +16,11 @@ from django.core.mail import send_mail
 from .models import Review,Order
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
+from django_ratelimit.decorators import ratelimit
+ 
 
 
+@ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @ensure_csrf_cookie
 @api_view(['POST'])
 def loginview(request):
@@ -33,7 +36,8 @@ def loginview(request):
         return response
     else:
         return Response({'error':'invalid credentials listed'},status=status.HTTP_401_UNAUTHORIZED)
-    
+
+@ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)    
 @ensure_csrf_cookie
 @api_view(['POST'])
 def signup(request):
@@ -60,6 +64,7 @@ def signup(request):
 def test_token(request):
     return Response({})
 
+@ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([TokenAuthentication])
@@ -77,6 +82,7 @@ def leave_review(request):
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+@ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([SessionAuthentication,TokenAuthentication])
@@ -118,6 +124,7 @@ def order_ride(request):
         return Response(serlializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
+@ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 @ensure_csrf_cookie
