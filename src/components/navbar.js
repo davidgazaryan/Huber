@@ -13,6 +13,7 @@ function NavBar(){
     const [activeNavbar, setActiveNavbar] = useState(false);
     const location = useLocation();
     const {user} = useAuthContext();
+    console.log("user state is",user)
 
     useEffect(() => {
         setActiveNavbar(false);
@@ -41,7 +42,7 @@ function NavBar(){
                     <Link to='/miscellaneous'>Miscellaneous</Link>
                     {user != null ? (
                         <>
-                        <li>{user}</li>
+                        <button>{user}</button>
                         <li><Logout/></li>
                         </>
                     ) :

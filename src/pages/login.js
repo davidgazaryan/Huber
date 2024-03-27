@@ -8,7 +8,7 @@ import useAuthContext from "../hooks/useAuthcontext";
 
 export const Login = () => {
 
-    const {user, setUser} = useAuthContext();
+    const {setUser} = useAuthContext();
 
     const location = useLocation();
     const isLoginPage = location.pathname === '/login';
@@ -22,8 +22,9 @@ export const Login = () => {
             
             console.log(response)
 
-            if (response.status === 200) {
-                setUser(response.data.email);
+            if (response.status === 200 ) {
+                console.log("Testing if correct response",response.data.user.email)
+                setUser(response.data.user.email);
             }
             
         } catch (error) {
