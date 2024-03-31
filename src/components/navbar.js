@@ -43,13 +43,13 @@ function NavBar(){
                     {user != null ? (
                         <>
                         <button>{user}</button>
-                        <li><Logout/></li>
+                        <button><Logout/></button>
                         </>
                     ) :
                     (
                         <>
                         <Link to='/login'>Login</Link>
-                        <Link to='/signup'>SignUp</Link>
+                        <button><Link to='/signup'>SignUp</Link></button>
                         </>
                     )}
                 </ul>

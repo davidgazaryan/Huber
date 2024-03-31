@@ -8,7 +8,7 @@ import useAuthContext from "../hooks/useAuthcontext";
 
 export const SignUp = () => {
     
-    const {user, setUser} = useAuthContext();
+    const {setUser} = useAuthContext();
 
     const location = useLocation();
     const isLoginPage = location.pathname === '/login';
@@ -21,7 +21,7 @@ export const SignUp = () => {
             withCredentials: true})
 
             if (response.status === 200){
-                setUser(response.data.email);
+                setUser(response.data.user.email);
             }
             
         } catch (error) {

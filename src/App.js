@@ -11,6 +11,7 @@ import { Login } from './pages/login';
 import { SignUp } from './pages/signup';
 import Footer from './components/footer';
 import { AuthProvider } from './hooks/Authcontext';
+import ScrollToTop from './components/scrolltop';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <div className="App">
         <Router>
           <AuthProvider>
+            <ScrollToTop/>
             <NavBar/>
                 <Routes>
                     <Route path = '/' element={<Home/>}/>
