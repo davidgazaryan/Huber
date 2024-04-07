@@ -31,7 +31,7 @@ def loginview(request):
         login(request, user=user) # MAY NOT NEED THIS SINCE WE ARE JUST USING TOKEN AUTH JUST USE TOKEN TO ACCESS ENDPOINTS 
         token, created = Token.objects.get_or_create(user=user)
         response = JsonResponse({"user": UserSerlializer(instance=user).data},status=status.HTTP_200_OK)
-        response.set_cookie(key='token', value=token.key, httponly=True,samesite=None,secure=True)
+        response.set_cookie(key='authtoken', value=token.key, httponly=True,samesite=None,secure=True)
     
         return response
     else:
@@ -53,7 +53,7 @@ def signup(request):
             login(request,user)
             token = Token.objects.create(user=user)
             response = JsonResponse({"user": serializer.data})
-            response.set_cookie(key='token', value=token.key, httponly=True,samesite=None,secure=True)
+            response.set_cookie(key='authtoken', value=token.key, httponly=True,samesite=None,secure=True)
             return response
     return Response(serializer.errors, status=status.HTTP_200_OK)
 

@@ -8,7 +8,9 @@ class UserSerlializer(serializers.ModelSerializer):
         model = User
         fields = ['id','username','password','email']
 
-        def validate_email(self,value):
+        def validate_username(self,value):
+            if User.objects.filter(username=value).exists():
+                raise serializers.ValidationError("This email is already taken")
             if not (value.endswith('@example.com') or value.endswith('@example.edu')):
                 raise serializers.ValidationError('invalid email')
             return value
