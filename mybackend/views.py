@@ -18,7 +18,10 @@ from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 from django_ratelimit.decorators import ratelimit
  
-
+@ensure_csrf_cookie
+@api_view(['POST'])
+def logout(request):
+    logout(request.user)
 
 @ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @ensure_csrf_cookie
