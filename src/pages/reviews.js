@@ -6,11 +6,12 @@ import '../styles/reviews.css';
 export const Review = () => {
   const handleSubmit = (formData) => {
     // Send formData to your backend API
-    fetch('http://127.0.0.1:8000/api/review/', {
+    fetch('https://localhost:8000/api/review/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      mode:'cors',
       credentials:'include',
       body: JSON.stringify(formData),
     })

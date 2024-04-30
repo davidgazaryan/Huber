@@ -15,7 +15,7 @@ export const Login = () => {
     
     const handleSubmit = async (formData) => {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/login/', formData,
+            const response = await axios.post('https://localhost:8000/api/login/', formData,
             {headers: 
                 {"Content-Type" : "application/json"},
             withCredentials: true})
