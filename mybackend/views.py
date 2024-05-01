@@ -23,6 +23,12 @@ from django_ratelimit.decorators import ratelimit
 @permission_classes([IsAuthenticated])
 @authentication_classes([TokenAuthentication,SessionAuthentication])
 def logout(request):
+
+    # #class Logout(APIView):
+    # def get(self, request, format=None):
+    #     # simply delete the token to force a login
+    #     request.user.auth_token.delete()
+    #     return Response(status=status.HTTP_200_OK)
     user = request.user
     if user:
         logout(user)
