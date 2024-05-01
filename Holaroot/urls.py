@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/review/',views.leave_review,name='review'),
     path('api/order/',views.order_ride, name='order'),
     path('api/order/<int:id>/', views.update_order, name='update_order'),
+    path('api/logout/', views.logout, name='logout'),
     
 
 ]

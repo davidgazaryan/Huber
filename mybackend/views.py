@@ -20,8 +20,13 @@ from django_ratelimit.decorators import ratelimit
  
 @ensure_csrf_cookie
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication,SessionAuthentication])
 def logout(request):
-    logout(request.user)
+    user = request.user
+    if user:
+        logout(user)
+        return Response({"detail":"logout successful"}, status=status.HTTP_200_OK)
 
 @ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @ensure_csrf_cookie
@@ -31,10 +36,10 @@ def loginview(request):
     if not user.check_password(request.data['password']): return Response({'detail': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
     user = authenticate(username=request.data['email'],email=request.data['email'],password=request.data['password'])
     if user:
-        login(request, user=user) # MAY NOT NEED THIS SINCE WE ARE JUST USING TOKEN AUTH JUST USE TOKEN TO ACCESS ENDPOINTS 
+        login(request=request,user=user) # MAY NOT NEED THIS SINCE WE ARE JUST USING TOKEN AUTH JUST USE TOKEN TO ACCESS ENDPOINTS 
         token, created = Token.objects.get_or_create(user=user)
         response = JsonResponse({"user": UserSerlializer(instance=user).data},status=status.HTTP_200_OK)
-        response.set_cookie(key='authtoken', value=token.key, httponly=True,samesite=None,secure=True)
+        response.set_cookie(key='authtoken', value=token.key, httponly=True,samesite="None",secure=True)
     
         return response
     else:
@@ -56,7 +61,7 @@ def signup(request):
             login(request,user)
             token = Token.objects.create(user=user)
             response = JsonResponse({"user": serializer.data})
-            response.set_cookie(key='authtoken', value=token.key, httponly=True,samesite=None,secure=True)
+            response.set_cookie(key='authtoken', value=token.key, httponly=True,samesite="None",secure=True)
             return response
     return Response(serializer.errors, status=status.HTTP_200_OK)
 
@@ -70,7 +75,7 @@ def test_token(request):
 @ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([TokenAuthentication])
+@authentication_classes([SessionAuthentication])
 @ensure_csrf_cookie
 def leave_review(request):
     if request.method == 'GET':
