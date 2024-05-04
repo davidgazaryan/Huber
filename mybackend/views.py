@@ -40,7 +40,7 @@ def logout(request):
 def loginview(request):
     user = get_object_or_404(User, email=request.data['email'])
     if not user.check_password(request.data['password']): return Response({'detail': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-    user = authenticate(username=request.data['email'],email=request.data['email'],password=request.data['password'])
+    user = authenticate(request=request,username=request.data['email'],email=request.data['email'],password=request.data['password'])
     if user:
         login(request=request,user=user) # MAY NOT NEED THIS SINCE WE ARE JUST USING TOKEN AUTH JUST USE TOKEN TO ACCESS ENDPOINTS 
         token, created = Token.objects.get_or_create(user=user)
