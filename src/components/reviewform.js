@@ -22,6 +22,7 @@ const ReviewForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className='review-form'>
+      <DjangoCSRFToken/>
       <div className='form-group'>
         <label className='form-label' htmlFor="title">Title</label>
         <input
