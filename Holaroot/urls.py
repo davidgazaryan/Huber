@@ -18,14 +18,14 @@ from django.urls import path
 from mybackend import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('api/login/', views.loginview, name='loginview'),
     path('api/signup/', views.signup, name='signup'),
     path('api/test_token/', views.test_token, name='test_token'),
     path('api/review/',views.leave_review,name='review'),
     path('api/order/',views.order_ride, name='order'),
     path('api/order/<int:id>/', views.update_order, name='update_order'),
-    path('api/logout/', views.logout, name='logout'),
+    path('api/logout/', views.logout_view, name='logoutview'),
+    path('admin/', admin.site.urls),
     
 
 ]

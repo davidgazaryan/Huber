@@ -1,0 +1,3 @@
+GET https://localhost:8000/test_token
+Content-Type: application/Json
+Authorization: Bearer ae620423c37e510d692c5b901b4a82bec9214027

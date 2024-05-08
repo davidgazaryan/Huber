@@ -9,30 +9,35 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import ensure_csrf_cookie,csrf_exempt
+from django.http import HttpRequest
 from django.urls import reverse
 from django.core.mail import send_mail
 from .models import Review,Order
 from django.http import JsonResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate,logout
 from django_ratelimit.decorators import ratelimit
- 
-@ensure_csrf_cookie
+from rest_framework.permissions import AllowAny
+
+
+
+
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([])
 @authentication_classes([TokenAuthentication,SessionAuthentication])
-def logout(request):
+def logout_view(request):
+     logout(request)
+     response = JsonResponse({'message': 'Logout successful'})
+     response.delete_cookie('authtoken')
+     response.delete_cookie('csrftoken')  # Replace 'authtoken' with your cookie name
+     return response
 
     # #class Logout(APIView):
     # def get(self, request, format=None):
     #     # simply delete the token to force a login
     #     request.user.auth_token.delete()
     #     return Response(status=status.HTTP_200_OK)
-    user = request.user
-    if user:
-        logout(user)
-        return Response({"detail":"logout successful"}, status=status.HTTP_200_OK)
+    
 
 @ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @ensure_csrf_cookie
@@ -81,8 +86,7 @@ def test_token(request):
 @ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @api_view(['POST','GET'])
 @permission_classes([IsAuthenticated])
-@authentication_classes([SessionAuthentication])
-@ensure_csrf_cookie
+@authentication_classes([TokenAuthentication,SessionAuthentication])
 def leave_review(request):
     if request.method == 'GET':
         reviews = Review.objects.all()
