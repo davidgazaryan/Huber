@@ -1,14 +1,14 @@
 import React from "react";
 import { useState,useEffect } from "react";
 
-const MyOrders = () =>{
+export const MyOrders = () => {
     const [orderlist, setOrderList] = useState([]);
     const [orderId, setOrderId] = useState(null);
 
     useEffect (() =>{
         const fetchOrders = async () => {
             try {
-                const response = await fetch('/api/orders'); // Adjust the endpoint as per your backend API
+                const response = await fetch('https://localhost:8000/api/orders'); // Adjust the endpoint as per your backend API
                 if (!response.ok) {
                     throw new Error('Failed to fetch orders');
                 }
@@ -24,7 +24,7 @@ const MyOrders = () =>{
     },[])
 
     const handleSubmit = () => {
-        fetch(`/api/update_order/${orderId}/`, {
+        fetch(`https://localhost:8000/api/update_order/${orderId}/`, {
         method: 'POST',  // or 'POST' depending on your update method
         headers: {
         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const MyOrders = () =>{
         return(
             <div>
                 {/* {for i in range len of order list , make buttons } */}
-                <button>Update order</button>
+                <button onClick={handleSubmit}>Update order</button>
             </div>
         )
 
