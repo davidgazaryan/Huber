@@ -23,7 +23,7 @@ from rest_framework.permissions import AllowAny
 
 
 @api_view(['POST'])
-@permission_classes([])
+@permission_classes([IsAuthenticated])
 @authentication_classes([TokenAuthentication,SessionAuthentication])
 def logout_view(request):
      logout(request)
