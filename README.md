@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+nvm use 16 
+HTTPS=TRUE npm start 
+python manage.py runsslserver
+
 ## Available Scripts
 
 In the project directory, you can run:
