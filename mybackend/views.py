@@ -67,21 +67,20 @@ def signup(request):
         user.set_password(request.data['password'])
         username = request.data['email']
         user.save()
-        user = authenticate(request=request,username=username, email=request.data['email'],password=request.data['password'])
-        if user:
-            login(request,user)
-            token = Token.objects.create(user=user)
-            response = JsonResponse({"user": serializer.data})
-            response.set_cookie(key='authtoken', value=token.key, httponly=True,samesite="None",secure=True)
-            return response
-    return Response(serializer.errors, status=status.HTTP_200_OK)
+    
+        login(request,user)
+        token = Token.objects.create(user=user)
+        response = JsonResponse({"user": serializer.data})
+        response.set_cookie(key='authtoken', value=token.key, httponly=True,samesite="None",secure=True)
+        return Response({"token":token.key,"user":serializer.data})
+    return Response({"token":token.key,"user":serializer.data}, status=status.HTTP_200_OK)
 
 @ensure_csrf_cookie
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication,TokenAuthentication])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def test_token(request):
-    return Response({})
+    return Response("passed for user{}".format(request.user.email))
 
 @ratelimit(key='user_or_ip',rate='10/m',method=ratelimit.ALL,block=True)
 @api_view(['POST','GET'])
